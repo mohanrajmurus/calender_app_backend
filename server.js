@@ -1,0 +1,16 @@
+const express = require("express")
+const dotenv = require("dotenv")
+const cors = require("cors")
+const connectDB = require("./config/db")
+const router = require('./routes/eventRoutes')
+dotenv.config()
+const { PORT, MONGO_URI } = process.env
+connectDB(MONGO_URI)
+const app = express()
+app.use(express.json())
+app.use(cors())
+app.use('/api',router)
+app.listen(PORT, (err) => {
+  if (err) return console.log(err)
+  console.log(`Server listening on port:${PORT}`)
+})
